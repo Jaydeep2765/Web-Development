@@ -1,0 +1,383 @@
++*In[1]:*+
+[source, ipython3]
+----
+import pandas as pd
+import numpy as np
+----
+
+
++*In[34]:*+
+[source, ipython3]
+----
+text = '''It was a Thursday, but it felt like a Monday to John. And John loved Mondays. He
+I should probably get another latte. I’ve just been sitting here with this empty cup. But
+John was always impatient on the weekends; he missed the formal structure of the business w
+Jesus, I’ve written another loser. '''
+----
+
+
++*In[35]:*+
+[source, ipython3]
+----
+text_split = text.split()
+----
+
+
++*In[36]:*+
+[source, ipython3]
+----
+text
+----
+
+
++*Out[36]:*+
+----'It was a Thursday, but it felt like a Monday to John. And John loved Mondays. He\nI should probably get another latte. I’ve just been sitting here with this empty cup. But\nJohn was always impatient on the weekends; he missed the formal structure of the business w\nJesus, I’ve written another loser. '----
+
+
++*In[5]:*+
+[source, ipython3]
+----
+import nltk
+----
+
+
++*In[6]:*+
+[source, ipython3]
+----
+nltk.download('stopwords')
+----
+
+
++*Out[6]:*+
+----
+[nltk_data] Downloading package stopwords to
+[nltk_data]     C:\Users\mayur\AppData\Roaming\nltk_data...
+[nltk_data]   Package stopwords is already up-to-date!
+True----
+
+
++*In[7]:*+
+[source, ipython3]
+----
+nltk.download('punkt')
+----
+
+
++*Out[7]:*+
+----
+[nltk_data] Downloading package punkt to
+[nltk_data]     C:\Users\mayur\AppData\Roaming\nltk_data...
+[nltk_data]   Package punkt is already up-to-date!
+True----
+
+
++*In[8]:*+
+[source, ipython3]
+----
+nltk.download('averaged_perceptron_tagger')
+----
+
+
++*Out[8]:*+
+----
+[nltk_data] Downloading package averaged_perceptron_tagger to
+[nltk_data]     C:\Users\mayur\AppData\Roaming\nltk_data...
+[nltk_data]   Package averaged_perceptron_tagger is already up-to-
+[nltk_data]       date!
+True----
+
+
++*In[9]:*+
+[source, ipython3]
+----
+from nltk.corpus import stopwords
+----
+
+
++*In[10]:*+
+[source, ipython3]
+----
+from nltk.tokenize import word_tokenize, sent_tokenize
+----
+
+
++*In[11]:*+
+[source, ipython3]
+----
+stop_words = stopwords.words('english')
+----
+
+
++*In[23]:*+
+[source, ipython3]
+----
+tokenized = sent_tokenize(text)
+for i in tokenized:
+# Word tokenizers is used to find the words
+# and punctuation in a string
+ wordsList = nltk.word_tokenize(i)
+# removing stop words from wordList
+ wordsList = [w for w in wordsList if not w in stop_words]
+# Using a Tagger. Which is part-of-speech
+# tagger or POS-tagger.
+ tagged = nltk.pos_tag(wordsList)
+ print(tagged)
+----
+
+
++*Out[23]:*+
+----
+[('It', 'PRP'), ('Thursday', 'NNP'), (',', ','), ('felt', 'VBD'), ('like', 'IN'), ('Monday', 'NNP'), ('John', 'NNP'), ('.', '.')]
+[('And', 'CC'), ('John', 'NNP'), ('loved', 'VBD'), ('Mondays', 'NNP'), ('.', '.')]
+[('He', 'PRP'), ('I', 'PRP'), ('probably', 'RB'), ('get', 'VB'), ('another', 'DT'), ('latte', 'NN'), ('.', '.')]
+[('I', 'PRP'), ('’', 'VBP'), ('sitting', 'VBG'), ('empty', 'JJ'), ('cup', 'NN'), ('.', '.')]
+[('But', 'CC'), ('John', 'NNP'), ('always', 'RB'), ('impatient', 'JJ'), ('weekends', 'NNS'), (';', ':'), ('missed', 'VBN'), ('formal', 'JJ'), ('structure', 'NN'), ('business', 'NN'), ('w', 'NN'), ('Jesus', 'NNP'), (',', ','), ('I', 'PRP'), ('’', 'VBP'), ('written', 'VBN'), ('another', 'DT'), ('loser', 'NN'), ('.', '.')]
+----
+
+
++*In[24]:*+
+[source, ipython3]
+----
+stopwords
+----
+
+
++*Out[24]:*+
+----<WordListCorpusReader in 'C:\\Users\\mayur\\AppData\\Roaming\\nltk_data\\corpora\\stopwords'>----
+
+
++*In[25]:*+
+[source, ipython3]
+----
+print(stopwords)
+----
+
+
++*Out[25]:*+
+----
+<WordListCorpusReader in 'C:\\Users\\mayur\\AppData\\Roaming\\nltk_data\\corpora\\stopwords'>
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+#stemming
+----
+
+
++*In[19]:*+
+[source, ipython3]
+----
+
+
+from nltk.stem.porter import PorterStemmer
+
+porter_stemmer = PorterStemmer()
+
+
+----
+
+
++*In[22]:*+
+[source, ipython3]
+----
+nltk_token = nltk.word_tokenize(text)
+for w in nltk_token:
+ print("Actual : %s , Stem: %s" %(w, porter_stemmer.stem(w)))
+----
+
+
++*Out[22]:*+
+----
+Actual : It , Stem: it
+Actual : was , Stem: wa
+Actual : a , Stem: a
+Actual : Thursday , Stem: thursday
+Actual : , , Stem: ,
+Actual : but , Stem: but
+Actual : it , Stem: it
+Actual : felt , Stem: felt
+Actual : like , Stem: like
+Actual : a , Stem: a
+Actual : Monday , Stem: monday
+Actual : to , Stem: to
+Actual : John , Stem: john
+Actual : . , Stem: .
+Actual : And , Stem: and
+Actual : John , Stem: john
+Actual : loved , Stem: love
+Actual : Mondays , Stem: monday
+Actual : . , Stem: .
+Actual : He , Stem: he
+Actual : I , Stem: i
+Actual : should , Stem: should
+Actual : probably , Stem: probabl
+Actual : get , Stem: get
+Actual : another , Stem: anoth
+Actual : latte , Stem: latt
+Actual : . , Stem: .
+Actual : I , Stem: i
+Actual : ’ , Stem: ’
+Actual : ve , Stem: ve
+Actual : just , Stem: just
+Actual : been , Stem: been
+Actual : sitting , Stem: sit
+Actual : here , Stem: here
+Actual : with , Stem: with
+Actual : this , Stem: thi
+Actual : empty , Stem: empti
+Actual : cup , Stem: cup
+Actual : . , Stem: .
+Actual : But , Stem: but
+Actual : John , Stem: john
+Actual : was , Stem: wa
+Actual : always , Stem: alway
+Actual : impatient , Stem: impati
+Actual : on , Stem: on
+Actual : the , Stem: the
+Actual : weekends , Stem: weekend
+Actual : ; , Stem: ;
+Actual : he , Stem: he
+Actual : missed , Stem: miss
+Actual : the , Stem: the
+Actual : formal , Stem: formal
+Actual : structure , Stem: structur
+Actual : of , Stem: of
+Actual : the , Stem: the
+Actual : business , Stem: busi
+Actual : w , Stem: w
+Actual : Jesus , Stem: jesu
+Actual : , , Stem: ,
+Actual : I , Stem: i
+Actual : ’ , Stem: ’
+Actual : ve , Stem: ve
+Actual : written , Stem: written
+Actual : another , Stem: anoth
+Actual : loser , Stem: loser
+Actual : . , Stem: .
+----
+
+
++*In[26]:*+
+[source, ipython3]
+----
+#lemmatization
+----
+
+
++*In[27]:*+
+[source, ipython3]
+----
+from nltk.stem import WordNetLemmatizer
+wordnet_lemmatizer = WordNetLemmatizer()
+----
+
+
++*In[28]:*+
+[source, ipython3]
+----
+nltk.download('wordnet')
+ 
+----
+
+
++*Out[28]:*+
+----
+[nltk_data] Downloading package wordnet to
+[nltk_data]     C:\Users\mayur\AppData\Roaming\nltk_data...
+[nltk_data]   Package wordnet is already up-to-date!
+True----
+
+
++*In[30]:*+
+[source, ipython3]
+----
+for w in nltk_token:
+ print("Actual : %s , Lemme: %s" %(w, wordnet_lemmatizer.lemmatize(w)))
+----
+
+
++*Out[30]:*+
+----
+Actual : It , Lemme: It
+Actual : was , Lemme: wa
+Actual : a , Lemme: a
+Actual : Thursday , Lemme: Thursday
+Actual : , , Lemme: ,
+Actual : but , Lemme: but
+Actual : it , Lemme: it
+Actual : felt , Lemme: felt
+Actual : like , Lemme: like
+Actual : a , Lemme: a
+Actual : Monday , Lemme: Monday
+Actual : to , Lemme: to
+Actual : John , Lemme: John
+Actual : . , Lemme: .
+Actual : And , Lemme: And
+Actual : John , Lemme: John
+Actual : loved , Lemme: loved
+Actual : Mondays , Lemme: Mondays
+Actual : . , Lemme: .
+Actual : He , Lemme: He
+Actual : I , Lemme: I
+Actual : should , Lemme: should
+Actual : probably , Lemme: probably
+Actual : get , Lemme: get
+Actual : another , Lemme: another
+Actual : latte , Lemme: latte
+Actual : . , Lemme: .
+Actual : I , Lemme: I
+Actual : ’ , Lemme: ’
+Actual : ve , Lemme: ve
+Actual : just , Lemme: just
+Actual : been , Lemme: been
+Actual : sitting , Lemme: sitting
+Actual : here , Lemme: here
+Actual : with , Lemme: with
+Actual : this , Lemme: this
+Actual : empty , Lemme: empty
+Actual : cup , Lemme: cup
+Actual : . , Lemme: .
+Actual : But , Lemme: But
+Actual : John , Lemme: John
+Actual : was , Lemme: wa
+Actual : always , Lemme: always
+Actual : impatient , Lemme: impatient
+Actual : on , Lemme: on
+Actual : the , Lemme: the
+Actual : weekends , Lemme: weekend
+Actual : ; , Lemme: ;
+Actual : he , Lemme: he
+Actual : missed , Lemme: missed
+Actual : the , Lemme: the
+Actual : formal , Lemme: formal
+Actual : structure , Lemme: structure
+Actual : of , Lemme: of
+Actual : the , Lemme: the
+Actual : business , Lemme: business
+Actual : w , Lemme: w
+Actual : Jesus , Lemme: Jesus
+Actual : , , Lemme: ,
+Actual : I , Lemme: I
+Actual : ’ , Lemme: ’
+Actual : ve , Lemme: ve
+Actual : written , Lemme: written
+Actual : another , Lemme: another
+Actual : loser , Lemme: loser
+Actual : . , Lemme: .
+----
+
+
++*In[37]:*+
+[source, ipython3]
+----
+
+----
+
+
++*In[ ]:*+
+[source, ipython3]
+----
+
+----
